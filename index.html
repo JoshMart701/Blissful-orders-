@@ -412,21 +412,10 @@ document.getElementById("btnEmail").onclick = async () => {
 
 function showConfirmation(){
   const p = priceOrder();
+  const logoSrc = document.querySelector(".logo-img").src;
   document.querySelector(".wrap").innerHTML = `
     <div class="logo">
-      <svg class="monogram" viewBox="0 0 120 120" aria-hidden="true">
-        <path d="M 96 88 A 46 46 0 1 1 104 55" fill="none" stroke="#9DC3A4" stroke-width="2" stroke-linecap="round"/>
-        <circle cx="101" cy="80" r="2.6" fill="#9DC3A4"/>
-        <circle cx="106" cy="72" r="2.1" fill="#9DC3A4"/>
-        <circle cx="109" cy="64" r="1.6" fill="#9DC3A4"/>
-        <g stroke="#9DC3A4" stroke-width="1.8" fill="none" stroke-linecap="round">
-          <path d="M 30 44 Q 22 26 30 12"/><path d="M 29 36 Q 20 34 16 40"/>
-          <path d="M 28 28 Q 19 25 15 30"/><path d="M 29 20 Q 21 15 18 20"/>
-          <path d="M 31 30 Q 39 28 42 22"/><path d="M 31 22 Q 38 19 40 13"/>
-        </g>
-        <text x="44" y="72" font-family="'Cormorant Garamond',serif" font-size="52" font-weight="500" fill="#BE8B52" text-anchor="middle">B</text>
-        <text x="70" y="88" font-family="'Allura',cursive" font-size="58" fill="#BE8B52" text-anchor="middle">C</text>
-      </svg>
+      <img class="logo-img" src="${logoSrc}" alt="Blissful Creations — Sweets & Skincare">
       <div class="brand">Thank You!</div>
     </div>
     <div class="card" style="text-align:center">
