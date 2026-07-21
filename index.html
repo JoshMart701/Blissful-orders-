@@ -57,6 +57,8 @@
   .tab.on{background:var(--caramel);color:#fff;box-shadow:0 4px 12px rgba(122,74,33,.2)}
   .tab-panel{display:none}
   .tab-panel.on{display:block}
+
+  .lye-note{font-size:10.5px;color:#B29275;text-align:center;margin-bottom:10px;line-height:1.5}
   .promo{
     background:linear-gradient(135deg,#BE8B52 0%,#A9772F 100%);
     border-radius:16px;padding:20px 18px 16px;margin-bottom:18px;
@@ -102,6 +104,7 @@
   .bar-price{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--caramel);white-space:nowrap}
   .bar-unit{font-size:12px;font-weight:600;color:#B29275;margin-left:2px}
   .bar-desc{font-size:13px;line-height:1.5;font-weight:500;color:#8A7360;margin-bottom:14px}
+  .ing-line{font-size:11px;font-style:italic;color:#B29275;line-height:1.5;margin:-6px 0 14px}
 
   .scent-label{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--sage-deep);margin-bottom:8px}
   .scent-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
@@ -221,6 +224,7 @@
   </div>
 
   <div class="tab-panel on" id="tab-soap" role="tabpanel">
+    <p class="lye-note">*Sodium hydroxide (lye) is required to make soap, but none remains in the finished bar — it fully transforms during the soap-making process.</p>
     <div class="promo">
       <div class="promo-badge">Bundle &amp; Save</div>
       <div class="promo-deals">
@@ -287,14 +291,17 @@ const ITEMS = [
   { id:"tallow", cat:"soap", group:"bars", name:"Tallow Bar", price:9, unit:"",
     variantLabel:"Choose a scent",
     desc:"Rich, creamy lather from slow-rendered tallow. Deeply moisturizing — our signature bar.",
+    ingredients:"Tallow, coconut oil, sunflower oil, shea butter, castor oil, water, sodium hydroxide*, fragrance oil (omitted if unscented).",
     variants:["Lavender","Eucalyptus Spearmint","Pomegranate Blackberry","Unscented"] },
   { id:"lard", cat:"soap", group:"bars", name:"Old-Fashioned Lard Bar", price:8, unit:"",
     variantLabel:"Choose a scent",
     desc:"A hard, long-lasting bar made the way great-grandma made it. Gentle and classic.",
+    ingredients:"Lard, coconut oil, olive oil, water, sodium hydroxide*, fragrance oil (omitted if unscented).",
     variants:["Lavender","Eucalyptus Spearmint","Pomegranate Blackberry","Unscented"] },
-  { id:"plant", cat:"soap", group:"bars", name:"Gentle Baby Bar", price:7, unit:"",
+  { id:"plant", cat:"soap", group:"bars", name:"Goat's Milk Baby Bar", price:7, unit:"",
     variantLabel:"Always fragrance-free",
-    desc:"Extra-mild, unscented bar made for brand-new skin. Nothing in it but what belongs — gentle enough for the whole family.",
+    desc:"Nourishing goat's milk bar, extra-mild and unscented — made for brand-new skin, gentle enough for the whole family.",
+    ingredients:"Olive oil, shea butter, coconut oil, sunflower oil, castor oil, water, sodium hydroxide*, goat's milk. No fragrance.",
     variants:["Unscented"] },
   { id:"balm-coconut", cat:"soap", group:"balms", name:"Coconut Oil Lip Balm", price:5, unit:"",
     variantLabel:"Choose a scent",
@@ -334,6 +341,7 @@ ITEMS.forEach(item => {
   const card = document.createElement("div");
   card.className = "card";
   const unitTag = item.unit ? `<span class="bar-unit">${item.unit}</span>` : "";
+  const ingLine = item.ingredients ? `<p class="ing-line">${item.ingredients}</p>` : "";
   card.innerHTML = `
     <div class="bar-head">
       <span class="bar-name">${item.name}</span>
@@ -341,6 +349,7 @@ ITEMS.forEach(item => {
       <span class="bar-price">$${item.price}${unitTag}</span>
     </div>
     <p class="bar-desc">${item.desc}</p>
+    ${ingLine}
     <p class="scent-label">${item.variantLabel}</p>
     <div class="scent-row" id="variants-${item.id}"></div>
     <div class="add-row">
