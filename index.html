@@ -97,7 +97,18 @@
     box-shadow:0 12px 32px rgba(122,74,33,.12);
     padding:22px 20px;
     margin-bottom:16px;
+    position:relative;
   }
+  .coming-soon-card{opacity:0.82}
+  .coming-soon-banner{
+    display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;
+    background:linear-gradient(135deg,#BE8B52 0%,#A9772F 100%);
+    color:#fff;border-radius:10px;padding:8px 10px;margin-bottom:14px;
+    font-family:'Quicksand',sans-serif;font-weight:700;font-size:13px;letter-spacing:.3px;
+  }
+  .coming-soon-sub{font-size:11px;font-weight:600;opacity:.92}
+  .coming-soon-card .scent-row{pointer-events:none;opacity:.55}
+  .coming-soon-card .stepper{pointer-events:none;opacity:.5}
 
   .bar-head{display:flex;align-items:baseline;gap:8px;margin-bottom:4px}
   .bar-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--brown)}
@@ -222,59 +233,6 @@
   <div class="tabs" role="tablist">
     <button class="tab on" id="tabBtn-soap" role="tab" aria-selected="true"><img class="tab-icon" src="data:image/webp;base64,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" alt=""> Soap</button>
     <button class="tab" id="tabBtn-treats" role="tab" aria-selected="false"><img class="tab-icon" src="data:image/webp;base64,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" alt=""> Treats</button>
-    <button class="tab" id="tabBtn-spa" role="tab" aria-selected="false"><svg class="tab-icon" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <defs>
-    <linearGradient id="boxTop" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#E28FAE"/>
-      <stop offset="100%" stop-color="#D06E93"/>
-    </linearGradient>
-    <linearGradient id="boxLeft" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#B85678"/>
-      <stop offset="100%" stop-color="#9E4363"/>
-    </linearGradient>
-    <linearGradient id="boxRight" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#D67B9D"/>
-      <stop offset="100%" stop-color="#C4638A"/>
-    </linearGradient>
-    <linearGradient id="bowGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#F0C476"/>
-      <stop offset="100%" stop-color="#D9A040"/>
-    </linearGradient>
-  </defs>
-
-  <!-- lid: rounded isometric top -->
-  <path d="M14 8.3 C14.5 8.05 15 8.05 15.5 8.3 L23.3 12.35 C23.85 12.63 23.85 13.37 23.3 13.65 L15.5 17.7
-           C15 17.95 14.5 17.95 14 17.7 L6.2 13.65 C5.65 13.37 5.65 12.63 6.2 12.35 Z" fill="url(#boxTop)"/>
-
-  <!-- left face -->
-  <path d="M6.2 13.9 L13.4 17.65 C13.6 17.75 13.8 17.8 14 17.83 L14 25.4 C13.8 25.37 13.6 25.32 13.4 25.22
-           L6.2 21.47 C5.75 21.24 5.6 20.85 5.6 20.4 L5.6 14.7 C5.6 14.35 5.85 14.05 6.2 13.9 Z" fill="url(#boxLeft)"/>
-
-  <!-- right face -->
-  <path d="M23.3 13.9 L16.1 17.65 C15.9 17.75 15.7 17.8 15.5 17.83 L15.5 25.4 C15.7 25.37 15.9 25.32 16.1 25.22
-           L23.3 21.47 C23.75 21.24 23.9 20.85 23.9 20.4 L23.9 14.7 C23.9 14.35 23.65 14.05 23.3 13.9 Z" fill="url(#boxRight)"/>
-
-  <!-- ribbon: front vertical band -->
-  <path d="M13.4 17.68 L14 17.83 L14.6 17.68 L14.6 25.4 L13.4 25.4 Z" fill="#F5D9A0" opacity="0.95"/>
-  <!-- ribbon: over the lid -->
-  <path d="M11.55 11.05 L14 12.35 L16.45 11.05 L14 9.75 Z" fill="#F5D9A0" opacity="0.95"/>
-  <path d="M8.85 12.55 L11.4 13.9 L11.55 12.35 L9.55 11.3 Z" fill="#EFCB8A" opacity="0.75"/>
-  <path d="M19.15 12.55 L16.6 13.9 L16.45 12.35 L18.45 11.3 Z" fill="#EFCB8A" opacity="0.75"/>
-
-  <!-- bow: two big rounded loops -->
-  <path d="M14 9.6 C 13.7 7.4 10.7 5.6 8.9 6.9 C 7.3 8.05 8.5 10.6 11.2 10.9 C 12.3 11.02 13.4 10.6 14 9.6 Z"
-        fill="url(#bowGrad)"/>
-  <path d="M14 9.6 C 14.3 7.4 17.3 5.6 19.1 6.9 C 20.7 8.05 19.5 10.6 16.8 10.9 C 15.7 11.02 14.6 10.6 14 9.6 Z"
-        fill="url(#bowGrad)"/>
-  <!-- bow loop highlights -->
-  <path d="M10.1 8.1 C 9.6 8.55 9.6 9.3 10.4 9.5" stroke="#FBEAC6" stroke-width="0.5" fill="none" stroke-linecap="round" opacity="0.85"/>
-  <path d="M17.9 8.1 C 18.4 8.55 18.4 9.3 17.6 9.5" stroke="#FBEAC6" stroke-width="0.5" fill="none" stroke-linecap="round" opacity="0.85"/>
-  <!-- bow knot -->
-  <circle cx="14" cy="9.85" r="1.05" fill="#C4872E"/>
-  <!-- tiny tails -->
-  <path d="M13.3 10.4 L12.5 12.4 L13.6 11.9 Z" fill="#D9A040"/>
-  <path d="M14.7 10.4 L15.5 12.4 L14.4 11.9 Z" fill="#D9A040"/>
-</svg> Spa Gift Box</button>
   </div>
 
   <div class="tab-panel on" id="tab-soap" role="tabpanel">
@@ -287,12 +245,6 @@
         <div class="promo-deal"><span class="pd-what">Any 3 lip balms</span><span class="pd-price">$3 off</span><span class="pd-save">mix any scents</span></div>
       </div>
       <div class="promo-note">Discounts apply automatically in your cart ✨</div>
-    </div>
-  </div>
-  <div class="tab-panel" id="tab-spa" role="tabpanel">
-    <div class="promo" style="background:linear-gradient(135deg,#9DC3A4 0%,#7FA989 100%)">
-      <div class="promo-badge">Spa Gift Box</div>
-      <div class="promo-note" style="margin-top:2px">Soap, lip balm, a candle, washcloth &amp; a corked match vial — wrapped and ready to gift ✨</div>
     </div>
   </div>
   <div class="tab-panel" id="tab-treats" role="tabpanel">
@@ -349,16 +301,19 @@ const WEB3FORMS_KEY = "fb00f63c-3a18-42a4-aaae-b8d42d65c93c";
 const ITEMS = [
   // ---- Soap (bundle pricing applies) ----
   { id:"tallow", cat:"soap", group:"bars", name:"Tallow Bar", price:9, unit:"",
+    comingSoon:true, comingSoonNote:"Currently curing — ready soon!",
     variantLabel:"Choose a scent",
     desc:"Rich, creamy lather from slow-rendered tallow. Deeply moisturizing — our signature bar.",
     ingredients:"Organic tallow, organic coconut oil, organic sunflower oil, organic shea butter, organic castor oil, water, sodium citrate, sodium hydroxide*, fragrance oil (omitted if unscented).",
     variants:["Lavender","Eucalyptus Spearmint","Pomegranate Blackberry","Unscented"] },
   { id:"lard", cat:"soap", group:"bars", name:"Old-Fashioned Lard Bar", price:8, unit:"",
+    comingSoon:true, comingSoonNote:"Currently curing — ready soon!",
     variantLabel:"Choose a scent",
     desc:"A hard, long-lasting bar made the way great-grandma made it. Gentle and classic.",
     ingredients:"Lard, organic coconut oil, organic sunflower oil, organic shea butter, organic castor oil, water, sodium citrate, sodium hydroxide*, fragrance oil (omitted if unscented).",
     variants:["Lavender","Eucalyptus Spearmint","Pomegranate Blackberry","Unscented"] },
   { id:"plant", cat:"soap", group:"bars", name:"Goat's Milk Baby Bar", price:7, unit:"",
+    comingSoon:true, comingSoonNote:"Currently curing — ready soon!",
     variantLabel:"Always fragrance-free",
     desc:"Nourishing goat's milk bar, extra-mild and unscented — made for brand-new skin, gentle enough for the whole family.",
     ingredients:"Organic shea butter, organic sunflower oil, organic coconut oil, organic castor oil, water, sodium citrate, sodium hydroxide*, goat's milk, rolled oats (topping). No fragrance.",
@@ -371,30 +326,11 @@ const ITEMS = [
     variantLabel:"Choose a scent",
     desc:"Deeply moisturizing balm made with slow-rendered tallow — our richest formula.",
     variants:["Lemon","Peppermint","Eucalyptus","Unscented"] },
-  // ---- Spa Gift Box ----
-  { id:"gift-small", cat:"spa", group:"gifts", name:"Small Spa Gift Box", price:30, unit:"1 soap bar",
-    variantLabel:"Choose your scent — soap & candle match",
-    variant2Label:"Choose your soap",
-    variant2Options:[{label:"Lard",delta:0},{label:"Tallow",delta:3}],
-    desc:"One soap bar, matching candle, lip balm, washcloth &amp; match vial, wrapped and ready to gift.",
-    variants:["Lavender","Eucalyptus Spearmint","Pomegranate Blackberry","Unscented"] },
-  { id:"gift-medium", cat:"spa", group:"gifts", name:"Medium Spa Gift Box", price:38, unit:"2 soap bars",
-    variantLabel:"Choose your scent — soap & candle match",
-    variant2Label:"Choose your soap",
-    variant2Options:[{label:"Lard",delta:0},{label:"Tallow",delta:3}],
-    desc:"Two soap bars, matching candle, lip balm, washcloth &amp; match vial, wrapped and ready to gift.",
-    variants:["Lavender","Eucalyptus Spearmint","Pomegranate Blackberry","Unscented"] },
-  { id:"gift-large", cat:"spa", group:"gifts", name:"Large Spa Gift Box", price:46, unit:"3 soap bars",
-    variantLabel:"Choose your scent — soap & candle match",
-    variant2Label:"Choose your soap",
-    variant2Options:[{label:"Lard",delta:0},{label:"Tallow",delta:3}],
-    desc:"Three soap bars, matching candle, lip balm, washcloth &amp; match vial, wrapped and ready to gift.",
-    variants:["Lavender","Eucalyptus Spearmint","Pomegranate Blackberry","Unscented"] },
   // ---- Treats ----
   { id:"cupcakes", cat:"treats", group:"treats", name:"Cupcakes", price:20, unit:"per dozen", qtyNoun:"dozen",
     variantLabel:"Choose a flavor",
     desc:"A dozen homemade cupcakes, baked and frosted from scratch.",
-    variants:["Vanilla","Chocolate","Lemon","Strawberry","Carrot Cake","Piña Colada"] },
+    variants:["Vanilla","Chocolate","Lemon","Cookies and Cream","Carrot Cake","Piña Colada"] },
   { id:"cookies", cat:"treats", group:"treats", name:"Cookies", price:14, unit:"per dozen", qtyNoun:"dozen",
     variantLabel:"Choose a flavor",
     desc:"A dozen fresh-baked cookies, soft in the middle the way they should be.",
@@ -418,10 +354,14 @@ function itemOf(id){ return ITEMS.find(i => i.id === id); }
 ITEMS.forEach(item => {
   state[item.id] = { variant: item.variants.length === 1 ? item.variants[0] : null, variant2: null, qty: 1 };
   const card = document.createElement("div");
-  card.className = "card";
+  card.className = "card" + (item.comingSoon ? " coming-soon-card" : "");
   const unitTag = item.unit ? `<span class="bar-unit">${item.unit}</span>` : "";
   const ingLine = item.ingredients ? `<p class="ing-line">${item.ingredients}</p>` : "";
+  const comingSoonBanner = item.comingSoon
+    ? `<div class="coming-soon-banner">🕰️ Coming Soon<span class="coming-soon-sub">${item.comingSoonNote || ""}</span></div>`
+    : "";
   card.innerHTML = `
+    ${comingSoonBanner}
     <div class="bar-head">
       <span class="bar-name">${item.name}</span>
       <span class="bar-lead"></span>
@@ -482,6 +422,7 @@ ITEMS.forEach(item => {
   });
 
   card.querySelector(`#add-${item.id}`).onclick = () => {
+    if (item.comingSoon) return;
     const s = state[item.id];
     if (!s.variant) return;
     if (item.variant2Options && !s.variant2) return;
@@ -499,6 +440,11 @@ ITEMS.forEach(item => {
 function setAddState(item){
   const btn = document.getElementById(`add-${item.id}`);
   const s = state[item.id];
+  if (item.comingSoon){
+    btn.disabled = true;
+    btn.textContent = "Coming Soon";
+    return;
+  }
   if (item.variant2Options && !s.variant2){
     btn.disabled = true;
     btn.textContent = "Pick a soap first";
@@ -512,21 +458,26 @@ function setAddState(item){
 }
 
 // ---- tabs ----
-["soap","treats","spa"].forEach(t => {
-  document.getElementById(`tabBtn-${t}`).onclick = () => {
-    ["soap","treats","spa"].forEach(x => {
-      document.getElementById(`tabBtn-${x}`).classList.toggle("on", x === t);
-      document.getElementById(`tabBtn-${x}`).setAttribute("aria-selected", x === t);
-      document.getElementById(`tab-${x}`).classList.toggle("on", x === t);
-    });
-  };
+function switchTab(t){
+  ["soap","treats"].forEach(x => {
+    document.getElementById(`tabBtn-${x}`).classList.toggle("on", x === t);
+    document.getElementById(`tabBtn-${x}`).setAttribute("aria-selected", x === t);
+    document.getElementById(`tab-${x}`).classList.toggle("on", x === t);
+  });
+}
+["soap","treats"].forEach(t => {
+  document.getElementById(`tabBtn-${t}`).onclick = () => switchTab(t);
 });
+// open directly to a tab via URL hash, e.g. blissfulcreationsep.com/#treats
+if (window.location.hash === "#treats") {
+  switchTab("treats");
+}
 
 // ---- pricing: bar bundles (5/$35, 3/$22), balm bundle (any 3/$15), treats at face value ----
 const BUNDLE5 = 35, BUNDLE3 = 22, BALM_OFF = 3;
 function priceOrder(){
   const barPrices = [], balmPrices = [];
-  let treatsTotal = 0, barCount = 0, balmCount = 0, treatCount = 0, giftsTotal = 0, giftCount = 0;
+  let treatsTotal = 0, barCount = 0, balmCount = 0, treatCount = 0;
   cart.forEach(l => {
     const it = itemOf(l.itemId);
     if (it.group === "bars"){
@@ -535,10 +486,6 @@ function priceOrder(){
     } else if (it.group === "balms"){
       balmCount += l.qty;
       for(let i=0;i<l.qty;i++) balmPrices.push(it.price);
-    } else if (it.cat === "spa"){
-      const delta = (it.variant2Options && l.variant2) ? (it.variant2Options.find(o=>o.label===l.variant2)?.delta || 0) : 0;
-      giftCount += l.qty;
-      giftsTotal += (it.price + delta) * l.qty;
     } else {
       treatCount += l.qty;
       treatsTotal += it.price * l.qty;
@@ -563,10 +510,10 @@ function priceOrder(){
   while (i < n){ balmTotal += balmPrices[i]; i++; }
   balmTotal = Math.min(balmTotal, balmSubtotal);
   return {
-    barCount, balmCount, treatCount, giftCount,
+    barCount, balmCount, treatCount,
     soapCount: barCount, // kept for confirmation compatibility
-    subtotal: barSubtotal + balmSubtotal + treatsTotal + giftsTotal,
-    total: barTotal + balmTotal + treatsTotal + giftsTotal,
+    subtotal: barSubtotal + balmSubtotal + treatsTotal,
+    total: barTotal + balmTotal + treatsTotal,
     savings: (barSubtotal - barTotal) + (balmSubtotal - balmTotal)
   };
 }
@@ -579,7 +526,7 @@ function effectivePrice(l){
 
 function cartLineLabel(l){
   const it = itemOf(l.itemId);
-  if (it.cat === "soap" || it.cat === "spa") return `${l.qty} × ${it.name}`;
+  if (it.cat === "soap") return `${l.qty} × ${it.name}`;
   const noun = it.qtyNoun + (l.qty > 1 ? (it.qtyNoun === "dozen" ? "" : "s") : "");
   return `${l.qty} ${noun} — ${it.name}`;
 }
@@ -614,7 +561,6 @@ function renderCart(){
   if (p.barCount) parts.push(`${p.barCount} bar${p.barCount>1?"s":""}`);
   if (p.balmCount) parts.push(`${p.balmCount} balm${p.balmCount>1?"s":""}`);
   if (p.treatCount) parts.push(`${p.treatCount} treat item${p.treatCount>1?"s":""}`);
-  if (p.giftCount) parts.push(`${p.giftCount} gift box${p.giftCount>1?"es":""}`);
   document.getElementById("countLbl").textContent = parts.join(" + ");
   document.getElementById("subtotal").textContent = `$${p.subtotal}`;
   const sr = document.getElementById("savingsRow");
@@ -641,7 +587,6 @@ function buildMessage(){
   let msg = "Hi! I'd like to order from Blissful Creations:\n";
   const soapLines = cart.filter(l => itemOf(l.itemId).cat === "soap");
   const treatLines = cart.filter(l => itemOf(l.itemId).cat === "treats");
-  const giftLines = cart.filter(l => itemOf(l.itemId).cat === "spa");
   if (soapLines.length){
     msg += "\nSOAP & BALMS:\n";
     soapLines.forEach(l => { msg += `• ${cartLineLabel(l)} — ${l.variant}\n`; });
@@ -649,10 +594,6 @@ function buildMessage(){
   if (treatLines.length){
     msg += "\nTREATS:\n";
     treatLines.forEach(l => { msg += `• ${cartLineLabel(l)} — ${l.variant}\n`; });
-  }
-  if (giftLines.length){
-    msg += "\nGIFT BOXES:\n";
-    giftLines.forEach(l => { msg += `• ${l.qty} × ${itemOf(l.itemId).name} — soap: ${l.variant2}, scent (soap & candle): ${l.variant}\n`; });
   }
   msg += `\nTotal: $${p.total}`;
   if (p.savings > 0) msg += ` (bundle pricing — saved $${p.savings})`;
@@ -714,7 +655,6 @@ function showConfirmation(){
   if (p.barCount) parts.push(`<strong>${p.barCount} bar${p.barCount>1?"s":""}</strong>`);
   if (p.balmCount) parts.push(`<strong>${p.balmCount} balm${p.balmCount>1?"s":""}</strong>`);
   if (p.treatCount) parts.push(`<strong>${p.treatCount} treat item${p.treatCount>1?"s":""}</strong>`);
-  if (p.giftCount) parts.push(`<strong>${p.giftCount} gift box${p.giftCount>1?"es":""}</strong>`);
   document.querySelector(".wrap").innerHTML = `
     <div class="logo">
       <img class="logo-img" src="${logoSrc}" alt="Blissful Creations — Sweets &amp; Skincare">
