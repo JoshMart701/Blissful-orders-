@@ -60,6 +60,8 @@
   .tab-panel.on{display:block}
 
   .lye-note{font-size:10.5px;color:#B29275;text-align:center;margin-bottom:10px;line-height:1.5}
+  .allergen-note{font-size:10.5px;color:#B29275;text-align:center;margin-bottom:10px;line-height:1.5}
+  .allergen-warn{font-size:11.5px;color:#A8461E;font-weight:700;margin-bottom:10px;line-height:1.4}
   .promo{
     background:linear-gradient(135deg,#BE8B52 0%,#A9772F 100%);
     border-radius:16px;padding:20px 18px 16px;margin-bottom:18px;
@@ -198,6 +200,9 @@
 
   /* checkout */
   .field{margin-bottom:12px}
+  .date-hint{font-size:11.5px;color:#B29275;margin-top:4px;font-style:italic}
+  .date-error{font-size:11.5px;color:#C0392B;margin-top:4px;font-weight:600}
+  #custDate.invalid-date{border-color:#C0392B;background:#FDF0EE}
   .field label{display:block;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--sage-deep);margin-bottom:6px}
   .field input,.field textarea{
     width:100%;border:1.5px solid var(--rule);border-radius:10px;background:#fff;
@@ -274,6 +279,7 @@
   </div>
   <div class="tab-panel" id="tab-treats" role="tabpanel">
     <p class="panel-note">Baked fresh to order — we'll confirm pickup timing when we reach out ♡</p>
+    <p class="allergen-note">Made in a home kitchen that also handles nuts, dairy, eggs, and gluten.</p>
   </div>
 
   <div class="card">
@@ -299,6 +305,12 @@
     <div class="field">
       <label for="custEmail">Your Email</label>
       <input id="custEmail" type="email" autocomplete="email" placeholder="you@email.com">
+    </div>
+    <div class="field" id="dateField" style="display:none">
+      <label for="custDate">Date Needed By</label>
+      <input id="custDate" type="date">
+      <p class="date-error" id="dateError" style="display:none">That date's too soon — treats need at least 3 days' notice.</p>
+      <p class="date-hint">Fresh-baked treats need at least 3 days' notice</p>
     </div>
     <div class="field">
       <label for="custNote">Anything else? (optional)</label>
@@ -361,6 +373,8 @@ const ITEMS = [
   { id:"cupcakes", cat:"treats", group:"treats", name:"Cupcakes", price:20, unit:"per dozen", qtyNoun:"dozen",
     variantLabel:"Choose a flavor",
     desc:"A dozen homemade cupcakes, baked and frosted from scratch.",
+    allergenNote:"Contains walnuts.",
+    allergenTriggerVariant:"Carrot Cake",
     variants:["Vanilla","Chocolate","Lemon","Cookies and Cream","Carrot Cake","Piña Colada"] },
   { id:"cookies", cat:"treats", group:"treats", name:"Cookies", price:14, unit:"per dozen", qtyNoun:"dozen",
     variantLabel:"Choose a flavor",
@@ -388,6 +402,7 @@ ITEMS.forEach(item => {
   card.className = "card" + (item.comingSoon ? " coming-soon-card" : "");
   const unitTag = item.unit ? `<span class="bar-unit">${item.unit}</span>` : "";
   const ingLine = item.ingredients ? `<p class="ing-line">${item.ingredients}</p>` : "";
+  const allergenLine = item.allergenNote ? `<p class="allergen-warn" id="allergen-${item.id}" style="display:none">⚠️ ${item.allergenNote}</p>` : "";
   const comingSoonBanner = item.comingSoon
     ? `<div class="coming-soon-banner">🕰️ Coming Soon<span class="coming-soon-sub">${item.comingSoonNote || ""}</span></div>`
     : "";
@@ -407,6 +422,7 @@ ITEMS.forEach(item => {
       <span class="bar-price" id="price-${item.id}">$${item.price}${unitTag}</span>
     </div>
     <p class="bar-desc">${item.desc}</p>
+    ${allergenLine}
     ${ingLine}
     ${item.variant2Options ? `<p class="scent-label">${item.variant2Label}</p><div class="scent-row" id="variant2-${item.id}"></div>` : ""}
     <p class="scent-label">${item.variantLabel}</p>
@@ -459,6 +475,10 @@ ITEMS.forEach(item => {
           imgEl.style.display = "none";
           placeholderEl.style.display = "";
         }
+      }
+      if (item.allergenTriggerVariant){
+        const warnEl = document.getElementById(`allergen-${item.id}`);
+        warnEl.style.display = (v === item.allergenTriggerVariant) ? "block" : "none";
       }
       setAddState(item);
     };
@@ -627,7 +647,35 @@ function renderCart(){
   else if (p.barCount === 4) hint.textContent = "1 more bar unlocks the 5-bar bundle — any 5 for $35";
   else if (p.balmCount === 2) hint.textContent = "1 more lip balm unlocks $3 off the trio";
   else hint.textContent = "";
+
+  const hasTreats = cart.some(l => itemOf(l.itemId).cat === "treats");
+  const dateField = document.getElementById("dateField");
+  const dateInput = document.getElementById("custDate");
+  dateField.style.display = hasTreats ? "block" : "none";
+  if (hasTreats){
+    const min = new Date();
+    min.setDate(min.getDate() + 3);
+    dateInput.min = min.toISOString().split("T")[0];
+  }
 }
+
+function checkDateValidity(){
+  const dateInput = document.getElementById("custDate");
+  const dateError = document.getElementById("dateError");
+  const dateHint = document.querySelector(".date-hint");
+  if (!dateInput.value){
+    dateInput.classList.remove("invalid-date");
+    dateError.style.display = "none";
+    if (dateHint) dateHint.style.display = "block";
+    return;
+  }
+  const tooSoon = dateInput.value < dateInput.min;
+  dateInput.classList.toggle("invalid-date", tooSoon);
+  dateError.style.display = tooSoon ? "block" : "none";
+  if (dateHint) dateHint.style.display = tooSoon ? "none" : "block";
+}
+document.getElementById("custDate").addEventListener("change", checkDateValidity);
+document.getElementById("custDate").addEventListener("input", checkDateValidity);
 
 function buildMessage(){
   const name = document.getElementById("custName").value.trim();
@@ -646,6 +694,8 @@ function buildMessage(){
   if (treatLines.length){
     msg += "\nTREATS:\n";
     treatLines.forEach(l => { msg += `• ${cartLineLabel(l)} — ${l.variant}\n`; });
+    const dateVal = document.getElementById("custDate").value;
+    if (dateVal) msg += `\nNeeded by: ${dateVal}\n`;
   }
   msg += `\nTotal: $${p.total}`;
   if (p.savings > 0) msg += ` (bundle pricing — saved $${p.savings})`;
@@ -661,6 +711,16 @@ function validate(){
   if (!document.getElementById("custPhone").value.trim()){ showToast("Please add your phone number"); return false; }
   const email = document.getElementById("custEmail").value.trim();
   if (!email || !email.includes("@")){ showToast("Please add a valid email"); return false; }
+  const hasTreats = cart.some(l => itemOf(l.itemId).cat === "treats");
+  if (hasTreats){
+    const dateVal = document.getElementById("custDate").value;
+    if (!dateVal){ showToast("Please choose a date needed by"); return false; }
+    if (dateVal < document.getElementById("custDate").min){
+      checkDateValidity();
+      showToast("Treats need at least 3 days' notice");
+      return false;
+    }
+  }
   return true;
 }
 
