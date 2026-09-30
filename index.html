@@ -141,6 +141,11 @@
     letter-spacing:.5px;padding:2px 7px;border-radius:20px;
     transform:translateY(-1px);
   }
+  .limited-badge{
+    background:#5F826B;color:#fff;font-size:9.5px;font-weight:800;
+    letter-spacing:.5px;padding:2px 7px;border-radius:20px;
+    transform:translateY(-1px);
+  }
   .bar-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--brown)}
   .bar-lead{flex:1;border-bottom:1.5px dotted var(--rule);transform:translateY(-4px)}
   .bar-price{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--caramel);white-space:nowrap}
@@ -393,7 +398,17 @@ const ITEMS = [
   { id:"cheesecake", cat:"treats", group:"treats", name:"Cheesecake (9\")", price:30, unit:"whole", qtyNoun:"cake",
     variantLabel:"Choose a topping",
     desc:"Luscious, dense cheesecake with a classic graham cracker crust.",
-    variants:["Classic","Mixed Berry Topping"] }
+    variants:["Classic","Mixed Berry Topping"] },
+  { id:"cinnamon-rolls", cat:"treats", group:"treats", name:"Cinnamon Rolls", price:24, unit:"", qtyNoun:"batch",
+    isLimitedTime:true,
+    variantLabel:"Style",
+    variants:["Classic"],
+    variant2Label:"Size",
+    variant2Options:[
+      { label:"8 Large Rolls", delta:0 },
+      { label:"~40 Mini Rolls", delta:4 }
+    ],
+    desc:"Warm, gooey cinnamon rolls topped with cream cheese icing." }
 ];
 
 let cart = []; // {itemId, variant, qty}
@@ -425,6 +440,7 @@ ITEMS.forEach(item => {
       <span class="bar-name">${item.name}</span>
       ${item.isNew ? `<span class="new-badge">NEW</span>` : ""}
       ${item.isBestSeller ? `<span class="bestseller-badge">BEST SELLER</span>` : ""}
+      ${item.isLimitedTime ? `<span class="limited-badge">LIMITED TIME</span>` : ""}
       <span class="bar-lead"></span>
       <span class="bar-price" id="price-${item.id}">$${item.price}${unitTag}</span>
     </div>
@@ -526,7 +542,8 @@ function setAddState(item){
   }
   if (item.variant2Options && !s.variant2){
     btn.disabled = true;
-    btn.textContent = "Pick a soap first";
+    const v2Label = (item.variant2Label || "option").toLowerCase();
+    btn.textContent = `Pick ${/^[aeiou]/.test(v2Label) ? "an" : "a"} ${v2Label} first`;
   } else if (!s.variant){
     btn.disabled = true;
     btn.textContent = item.cat === "treats" ? "Pick a flavor first" : "Pick a scent first";
@@ -559,15 +576,16 @@ function priceOrder(){
   let treatsTotal = 0, barCount = 0, balmCount = 0, treatCount = 0;
   cart.forEach(l => {
     const it = itemOf(l.itemId);
+    const p = effectivePrice(l);
     if (it.group === "bars"){
       barCount += l.qty;
-      for(let i=0;i<l.qty;i++) barPrices.push(it.price);
+      for(let i=0;i<l.qty;i++) barPrices.push(p);
     } else if (it.group === "balms"){
       balmCount += l.qty;
-      for(let i=0;i<l.qty;i++) balmPrices.push(it.price);
+      for(let i=0;i<l.qty;i++) balmPrices.push(p);
     } else {
       treatCount += l.qty;
-      treatsTotal += it.price * l.qty;
+      treatsTotal += p * l.qty;
     }
   });
   // soap bars: greedy 5-packs then a 3-pack
